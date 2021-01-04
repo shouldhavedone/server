@@ -6,17 +6,17 @@ class LabelController extends Controller {
     const { ctx, app } = this;
     const { Op } = app.Sequelize;
     const params = ctx.request.query
-    console.log(params)
     const option = {
       limit: parseInt(params.rows),
-      offset: parseInt(params.page) * parseInt(params.rows),
+      offset: (parseInt(params.page) - 1) * parseInt(params.rows),
       where: {
         name: {
-          [Op.like]: params.name
+          [Op.like]: '%' + params.name + '%'
         }
       }
     }
     const res = await ctx.model.Label.findAll(option)
+
     ctx.body = {
       total: res.length,
       data: res,
@@ -42,16 +42,14 @@ class LabelController extends Controller {
         isSucceed: true,
       }
     } else {
-
-      console.log('-----------')
       const [res, created] = await ctx.model.Label.findOrCreate({
         where: {
           name: params.name,
-        }
+        },
+        defaults: params
       })
 
-      console.log(res)
-      if(created) {
+      if (created) {
         ctx.body = {
           total: 0,
           data: "创建成功",

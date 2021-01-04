@@ -5,7 +5,8 @@ module.exports = app => {
   const Comment = app.model.define('Comment', {
     id: {
       type: INTEGER(12),
-      primaryKey: true
+      primaryKey: true,
+      autoIncrement: true
     },
     content: {
       type: TEXT,

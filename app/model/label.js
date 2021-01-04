@@ -6,7 +6,7 @@ module.exports = app => {
     id: {
       type: INTEGER(12),
       primaryKey: true,
-      
+      autoIncrement: true
     },
     name: {
       type: STRING(64),
