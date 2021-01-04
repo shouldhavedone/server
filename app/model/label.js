@@ -1,11 +1,12 @@
 'use strict'
 
 module.exports = app => {
-  const { INTEGER, STRING, BOOLEAN } = app.Sequelize
+  const { INTEGER, STRING, BOOLEAN, DATE } = app.Sequelize
   const Label = app.model.define('Label', {
     id: {
       type: INTEGER(12),
-      primaryKey: true
+      primaryKey: true,
+      
     },
     name: {
       type: STRING(64),
@@ -13,6 +14,9 @@ module.exports = app => {
     },
     description: {
       type: STRING(255),
+    },
+    createtime: {
+      type: DATE,
     },
     status: {
       type: BOOLEAN,
@@ -29,6 +33,6 @@ module.exports = app => {
       foreignKey: 'label_id',
     })
   }
-  
+
   return Label
 }
