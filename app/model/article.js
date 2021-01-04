@@ -1,7 +1,7 @@
 'use strict'
 
 module.exports = app => {
-  const { INTEGER, STRING, DATE, TEXT } = app.Sequelize
+  const { INTEGER, STRING, DATE, TEXT, BOOLEAN } = app.Sequelize
    const Article = app.model.define('Article', {
     id: {
       type: INTEGER(12),
@@ -23,13 +23,18 @@ module.exports = app => {
         model: 'Label',
       }
     },
+    description: {
+      type: STRING(255),
+    },
     content: {
       type: TEXT
     },
+    image: {
+      type: STRING(255),
+    },
     watched: {
-      type: INTEGER(4),
-      defaultValue: 1,
-      validate: { min: 0 }
+      type: INTEGER(8),
+      defaultValue: 0,
     },
     comment_id: {
       type: INTEGER(12),
@@ -37,19 +42,39 @@ module.exports = app => {
         model: 'Comment',
       }
     },
+    thumbs_up: {
+      type: INTEGER(12),
+      defaultValue: 0,
+    },
+    createtime: {
+      type: DATE,
+    },
     status: {
-      type: INTEGER(4),
+      type: BOOLEAN,
       defaultValue: 1,
-      validate: { min: 0 }
     },
     top: {
-      type: INTEGER(4),
-      defaultValue: 1
+      type: BOOLEAN,
+      defaultValue: 0,
     },
   }, {
     timestamps: false,
     underscored: true,
     tableName: 'article'
   })
+
+  Article.associate = function () {
+    app.model.Article.hasMany(app.model.Comment, {
+      foreignKey: 'comment_id',
+    })
+    app.model.Article.belongsTo(app.model.User, {
+      foreignKey: 'user_id',
+      targetKey: 'id',
+    })
+    app.model.Article.belongsTo(app.model.Label, {
+      foreignKey: 'label_id',
+    })
+  }
+
   return Article
 }

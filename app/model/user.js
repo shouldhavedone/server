@@ -1,10 +1,10 @@
 'use strict'
 
 module.exports = app => {
-  const { INTEGER, DATE, STRING } = app.Sequelize
+  const { INTEGER, STRING } = app.Sequelize
   const User = app.model.define('User', {
     id: {
-      type: STRING(12),
+      type: INTEGER(12),
       primaryKey: true
     },
     username: {
@@ -20,5 +20,21 @@ module.exports = app => {
     timestamps: false,
     tableName: 'user'
   })
+
+  User.associate = function () {
+    // app.model.User.hasOne(app.model.Comment, {
+    //   foreignKey: 'user_id',
+    // })
+    // app.model.User.hasOne(app.model.Comment, {
+    //   foreignKey: 'fathercomment_id',
+    // })
+    // app.model.User.hasOne(app.model.Article, {
+    //   foreignKey: 'user_id',
+    // })
+    // app.model.User.hasMany(app.model.Article, {
+    //   foreignKey: 'article_id',
+    // })
+  }
+
   return User
 }

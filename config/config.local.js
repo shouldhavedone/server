@@ -1,5 +1,5 @@
 exports.security = {
-  dominWhiteList: ['http://localhost:9000'],
+  // dominWhiteList: ['http://localhost:8080'],
 }
 
 exports.sequelize = {
