@@ -15,11 +15,10 @@ class LabelController extends Controller {
         }
       }
     }
-    const res = await ctx.model.Label.findAll(option)
-
+    const res = await ctx.model.Label.findAndCountAll(option)
     ctx.body = {
-      total: res.length,
-      data: res,
+      total: res.count,
+      data: res.rows,
       code: 200,
       isSucceed: true,
     }
@@ -28,7 +27,6 @@ class LabelController extends Controller {
   async addOrUpdateLabel() {
     const { ctx } = this;
     const params = ctx.request.body;
-    console.log(params)
     if (params.id) {
       const res = await ctx.model.Label.update(params, {
         where: {
@@ -37,7 +35,7 @@ class LabelController extends Controller {
       })
       ctx.body = {
         total: 0,
-        data: res,
+        message: '修改成功',
         code: 200,
         isSucceed: true,
       }
@@ -52,17 +50,47 @@ class LabelController extends Controller {
       if (created) {
         ctx.body = {
           total: 0,
-          data: "创建成功",
+          message: "创建成功",
           code: 200,
           isSucceed: true,
         }
       } else {
         ctx.body = {
           total: 0,
-          data: "分类已存在",
-          code: 200,
+          message: "分类已存在",
+          code: 250,
           isSucceed: false,
         }
+      }
+    }
+  }
+
+  async delLabel() {
+    const { ctx, app } = this;
+    const { Op } = app.Sequelize;
+    const params = ctx.request.body;
+    const ids = params.ids.split(',').map(c => +c);
+    const res = ctx.model.Label.destroy({
+      where: {
+        id: {
+          [Op.in]: ids
+        }
+      }
+    })
+
+    if (res) {
+      ctx.body = {
+        total: 0,
+        message: "删除成功",
+        code: 200,
+        isSucceed: true,
+      }
+    } else {
+      ctx.body = {
+        total: 0,
+        message: "删除失败",
+        code: 250,
+        isSucceed: false,
       }
     }
   }

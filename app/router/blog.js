@@ -6,4 +6,5 @@ module.exports = app => {
   // 分类
   router.get('/back-sys/blog-service/getLabelList', controller.blog.label.getLabelList);
   router.post('/back-sys/blog-service/addOrUpdateLabel', controller.blog.label.addOrUpdateLabel);
+  router.post('/back-sys/blog-service/delLabel', controller.blog.label.delLabel)
 };
