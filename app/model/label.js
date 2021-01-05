@@ -18,9 +18,6 @@ module.exports = app => {
     createtime: {
       type: DATE,
     },
-    modifytime: {
-      type: DATE,
-    },
     status: {
       type: BOOLEAN,
       defaultValue: 1,
