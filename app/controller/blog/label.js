@@ -24,6 +24,18 @@ class LabelController extends Controller {
     }
   }
 
+  async getAllLabel() {
+    const { ctx } = this;
+    const res = await ctx.model.Label.findAndCountAll()
+    ctx.body = {
+      total: res.count,
+      data: res.rows,
+      code: 200,
+      isSucceed: true,
+    }
+
+  }
+
   async addOrUpdateLabel() {
     const { ctx } = this;
     const params = ctx.request.body;
