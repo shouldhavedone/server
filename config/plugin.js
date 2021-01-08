@@ -14,6 +14,13 @@ module.exports = {
   cors: {
     enable: true,
     package: 'egg-cors'
-  }
+  },
+
+  qiniu: {
+    enable: true,
+    package: 'qiniu'
+  },
+
+  
 };
 

@@ -22,6 +22,10 @@ module.exports = appInfo => {
   const userConfig = {
     // myAppName: 'egg',
   };
+  config.multipart = {
+    mode: 'stream',
+    fileSize: '10mb',
+  }
 
   config.security = {
     csrf: {
@@ -33,6 +37,14 @@ module.exports = appInfo => {
   config.cors = {
     origin: '*',
     allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH,OPTIONS'
+  }
+
+  // 七牛
+  config.qiniuConfig = {
+    accessKey: '8-I_J1XYGKnmCXAhGVCiazW3bcOD_CWORqvTE0j9',
+    secretKey: 'ILIkDDJe6cNo6usq01f80Nvgt8c9RJrF8c1ctt1i',
+    dataDucket: 'back-group',
+    fileUrl: 'http://qmly29cs3.hd-bkt.clouddn.com/'
   }
 
   return {

@@ -9,10 +9,15 @@
   "dependencies": {
     "egg": "^2.15.1",
     "egg-cors": "^2.2.3",
+    "egg-multipart": "^2.10.3",
     "egg-scripts": "^2.11.0",
     "egg-sequelize": "^6.0.0",
     "jsonwebtoken": "^8.5.1",
-    "mysql2": "^2.2.5"
+    "md5": "^2.3.0",
+    "mysql2": "^2.2.5",
+    "mz": "^2.7.0",
+    "qiniu": "^7.3.2",
+    "stream-wormhole": "^1.1.0"
   },
   "devDependencies": {
     "autod": "^3.0.1",
