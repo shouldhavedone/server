@@ -62,19 +62,30 @@ class QiniuService extends Service {
 
   async deleteFiles(filename) {
     const { config } = this;
-    const mac = new qiniu.auth.digest.Mac(config.qiniuConfig.accessKey, config.qiniuConfig.secretKey);
-    const configs = new qiniu.conf.Config();
-    config.zone = qiniu.zone.Zone_z0;
-    const bucketManager = new qiniu.rs.BucketManager(mac, configs);
-    bucketManager.delete(
-      config.qiniuConfig.dataDucket,
-      md5(filename),
-      (respErr, respBody, respInfo) => {
-        if (respErr) {
-          return respErr;
-        }
-        return respInfo.statusCode;
-      })
+    const extname = filename.substring(filename.lastIndexOf('.') + 1)
+    try {
+      const mac = new qiniu.auth.digest.Mac(config.qiniuConfig.accessKey, config.qiniuConfig.secretKey);
+      const configs = new qiniu.conf.Config();
+      config.zone = qiniu.zone.Zone_z0;
+      const bucketManager = new qiniu.rs.BucketManager(mac, configs);
+      const res = await new Promise((resolve, reject) =>
+        bucketManager.delete(
+          config.qiniuConfig.dataDucket,
+          `${md5(filename)}.${extname}`,
+          (err, respBody, respInfo) => {
+            if (err) {
+              reject("");
+            } else {
+              resolve(respInfo)
+            }
+          }
+        )
+      )
+      return res.statusCode == 200 ? true : false;
+    } catch (err) {
+      console.log(err)
+      return false
+    }
   }
 }
 

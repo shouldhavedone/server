@@ -1,6 +1,6 @@
 'use strict';
 const Controller = require('egg').Controller;
- 
+
 class ArticleController extends Controller {
   async getArticleList() {
     const { ctx, app } = this;
@@ -32,6 +32,7 @@ class ArticleController extends Controller {
   async addOrUpdateArticle() {
     const { ctx } = this;
     const params = ctx.request.body;
+    console.log(params)
     if (params.id) {
       const res = await ctx.model.Article.update(params, {
         where: {
@@ -55,14 +56,13 @@ class ArticleController extends Controller {
       if (created) {
         ctx.body = {
           total: 0,
-          message: "创建成功",
           code: 200,
           isSucceed: true,
         }
       } else {
         ctx.body = {
           total: 0,
-          message: "标题已存在",
+          message: "失败",
           code: 250,
           isSucceed: false,
         }
@@ -97,10 +97,10 @@ class ArticleController extends Controller {
         isSucceed: false,
       }
     }
-    
-    
+
+
     ctx.body = 'delArticle'
   }
 }
- 
+
 module.exports = ArticleController;

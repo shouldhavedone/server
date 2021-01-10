@@ -32,6 +32,9 @@ module.exports = app => {
     image: {
       type: STRING(255),
     },
+    keyword: {
+      type: STRING(32),
+    },
     watched: {
       type: INTEGER(8),
       defaultValue: 0,
