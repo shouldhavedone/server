@@ -6,11 +6,15 @@ class ArticleController extends Controller {
     const { ctx, app } = this;
     const { Op } = app.Sequelize;
     const params = ctx.request.query
-
-    console.log(params)
     const option = {
       limit: parseInt(params.rows),
       offset: (parseInt(params.page) - 1) * parseInt(params.rows),
+      include: [
+        { 
+          model: ctx.model.Label, 
+          attributes: ['name']
+        }
+      ],
       where: {
         title: {
           [Op.like]: '%' + params.title + '%'
@@ -32,7 +36,6 @@ class ArticleController extends Controller {
   async addOrUpdateArticle() {
     const { ctx } = this;
     const params = ctx.request.body;
-    console.log(params)
     if (params.id) {
       const res = await ctx.model.Article.update(params, {
         where: {

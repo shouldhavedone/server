@@ -79,6 +79,7 @@ module.exports = app => {
     })
     app.model.Article.belongsTo(app.model.Label, {
       foreignKey: 'label_id',
+      targetKey: 'id'
     })
   }
 
