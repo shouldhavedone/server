@@ -11,4 +11,6 @@ module.exports = app => {
   require('./router/blog')(app);
   require('./router/scheduling/building')(app);
   require('./router/scheduling/classroom')(app);
+  require('./router/scheduling/college')(app);
+  require('./router/scheduling/major')(app);
 };
