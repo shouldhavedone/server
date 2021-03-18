@@ -2,27 +2,21 @@
 
 module.exports = app => {
   const { INTEGER, STRING, DATE } = app.Sequelize
-  const User = app.model.define('User', {
+  const Classroom = app.model.define('Classroom', {
     id: {
       type: INTEGER(8),
       primaryKey: true,
       autoIncrement: true
     },
-    username: {
-      type: STRING(16),
+    name: {
+      type: STRING(32),
       allowNull: false
     },
-    password: {
-      type: STRING(16),
-      allowNull: false,
-      defaultValue: '123456'
-    },
-    role_id: {
+    building_id: {
       type: INTEGER(8),
       references: {
-        model: 'Role',
-      },
-      defaultValue: 3,
+        model: 'Building',
+      }
     },
     createtime: {
       type: DATE,
@@ -31,12 +25,12 @@ module.exports = app => {
   }, {
     freezeTableName: true,
     timestamps: false,
-    tableName: 'user'
+    tableName: 'classroom'
   })
 
-  User.associate = function () {
-    app.model.User.belongsTo(app.model.Role)
+  Classroom.associate = function () {
+    app.model.Classroom.belongsTo(app.model.Building)
   }
 
-  return User
+  return Classroom
 }

@@ -8,7 +8,7 @@ exports.sequelize = {
       delegate: 'model',
       baseDir: 'model',
       dialect: 'mysql',
-      database: process.env.EGG_MYSQL_DATABASE || 'blog',
+      database: process.env.EGG_MYSQL_DATABASE || 'course-scheduling',
       host: process.env.EGG_MYSQL_HOST || '127.0.0.1',
       port: process.env.EGG_MYSQL_PORT || '3306',
       username: 'root',
