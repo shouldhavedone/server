@@ -13,4 +13,7 @@ module.exports = app => {
   require('./router/scheduling/classroom')(app);
   require('./router/scheduling/college')(app);
   require('./router/scheduling/major')(app);
+  require('./router/scheduling/class')(app);
+  require('./router/scheduling/schoolyear')(app);
+  require('./router/scheduling/semester')(app);
 };

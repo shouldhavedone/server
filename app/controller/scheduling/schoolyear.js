@@ -1,30 +1,21 @@
 'use strict';
 const Controller = require('egg').Controller;
 
-class MajorController extends Controller {
-  async getMajorList() {
+class SchoolyearController extends Controller {
+  async getSchoolyearList() {
     const { ctx, app } = this;
     const { Op } = app.Sequelize;
     const params = ctx.request.query
     const option = {
       limit: parseInt(params.rows),
       offset: (parseInt(params.page) - 1) * parseInt(params.rows),
-      include: [
-        { 
-          model: ctx.model.College, 
-          attributes: ['name'],
-        }
-      ],
       where: {
         name: {
           [Op.like]: '%' + params.name + '%'
         },
-        college_id: {
-          [Op.like]: '%' + params.college_id + '%'
-        },
       }
     }
-    const res = await ctx.model.Major.findAndCountAll(option)
+    const res = await ctx.model.Schoolyear.findAndCountAll(option)
     ctx.body = {
       total: res.count,
       data: res.rows,
@@ -33,9 +24,9 @@ class MajorController extends Controller {
     }
   }
 
-  async getAllMajor() {
+  async getAllSchoolyear() {
     const { ctx } = this;
-    const res = await ctx.model.Major.findAndCountAll()
+    const res = await ctx.model.Schoolyear.findAndCountAll()
     ctx.body = {
       total: res.count,
       data: res.rows,
@@ -44,11 +35,11 @@ class MajorController extends Controller {
     }
   }
 
-  async addOrUpdateMajor() {
+  async addOrUpdateSchoolyear() {
     const { ctx } = this;
     const params = ctx.request.body;
     if (params.id) {
-      const res = await ctx.model.Major.update(params, {
+      const res = await ctx.model.Schoolyear.update(params, {
         where: {
           id: params.id
         }
@@ -60,7 +51,7 @@ class MajorController extends Controller {
         isSucceed: true,
       }
     } else {
-      const [res, created] = await ctx.model.Major.findOrCreate({
+      const [res, created] = await ctx.model.Schoolyear.findOrCreate({
         where: {
           name: params.name,
         },
@@ -85,12 +76,12 @@ class MajorController extends Controller {
     }
   }
 
-  async delMajor() {
+  async delSchoolyear() {
     const { ctx, app } = this;
     const { Op } = app.Sequelize;
     const params = ctx.request.body;
     const ids = params.ids.split(',').map(c => +c);
-    const res = ctx.model.Major.destroy({
+    const res = ctx.model.Schoolyear.destroy({
       where: {
         id: {
           [Op.in]: ids
@@ -115,4 +106,4 @@ class MajorController extends Controller {
   }
 }
 
-module.exports = MajorController;
+module.exports = SchoolyearController;

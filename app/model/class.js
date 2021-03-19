@@ -2,7 +2,7 @@
 
 module.exports = app => {
   const { INTEGER, STRING, DATE } = app.Sequelize
-  const Major = app.model.define('Major', {
+  const Class = app.model.define('Class', {
     id: {
       type: INTEGER(8),
       primaryKey: true,
@@ -12,10 +12,16 @@ module.exports = app => {
       type: STRING(32),
       allowNull: false
     },
-    college_id: {
+    major_id: {
       type: INTEGER(8),
       references: {
-        model: 'College',
+        model: 'Major',
+      }
+    },
+    schoolyear_id: {
+      type: INTEGER(8),
+      references: {
+        model: 'Schoolyear',
       }
     },
     createtime: {
@@ -25,15 +31,13 @@ module.exports = app => {
   }, {
     freezeTableName: true,
     timestamps: false,
-    tableName: 'major'
+    tableName: 'class'
   })
 
-  Major.associate = function () {
-    app.model.Major.belongsTo(app.model.College)
-    app.model.Major.hasMany(app.model.Class, {
-      foreignKey: 'major_id',
-    })
+  Class.associate = function () {
+    app.model.Class.belongsTo(app.model.Major)
+    app.model.Class.belongsTo(app.model.Schoolyear)
   }
 
-  return Major
+  return Class
 }

@@ -1,8 +1,8 @@
 'use strict';
 const Controller = require('egg').Controller;
 
-class MajorController extends Controller {
-  async getMajorList() {
+class SemesterController extends Controller {
+  async getSemesterList() {
     const { ctx, app } = this;
     const { Op } = app.Sequelize;
     const params = ctx.request.query
@@ -11,7 +11,7 @@ class MajorController extends Controller {
       offset: (parseInt(params.page) - 1) * parseInt(params.rows),
       include: [
         { 
-          model: ctx.model.College, 
+          model: ctx.model.Schoolyear, 
           attributes: ['name'],
         }
       ],
@@ -19,12 +19,12 @@ class MajorController extends Controller {
         name: {
           [Op.like]: '%' + params.name + '%'
         },
-        college_id: {
-          [Op.like]: '%' + params.college_id + '%'
+        schoolyear_id: {
+          [Op.like]: '%' + params.schoolyear_id + '%'
         },
       }
     }
-    const res = await ctx.model.Major.findAndCountAll(option)
+    const res = await ctx.model.Semester.findAndCountAll(option)
     ctx.body = {
       total: res.count,
       data: res.rows,
@@ -33,22 +33,11 @@ class MajorController extends Controller {
     }
   }
 
-  async getAllMajor() {
-    const { ctx } = this;
-    const res = await ctx.model.Major.findAndCountAll()
-    ctx.body = {
-      total: res.count,
-      data: res.rows,
-      code: 200,
-      isSucceed: true,
-    }
-  }
-
-  async addOrUpdateMajor() {
+  async addOrUpdateSemester() {
     const { ctx } = this;
     const params = ctx.request.body;
     if (params.id) {
-      const res = await ctx.model.Major.update(params, {
+      const res = await ctx.model.Semester.update(params, {
         where: {
           id: params.id
         }
@@ -60,7 +49,7 @@ class MajorController extends Controller {
         isSucceed: true,
       }
     } else {
-      const [res, created] = await ctx.model.Major.findOrCreate({
+      const [res, created] = await ctx.model.Semester.findOrCreate({
         where: {
           name: params.name,
         },
@@ -85,12 +74,12 @@ class MajorController extends Controller {
     }
   }
 
-  async delMajor() {
+  async delSemester() {
     const { ctx, app } = this;
     const { Op } = app.Sequelize;
     const params = ctx.request.body;
     const ids = params.ids.split(',').map(c => +c);
-    const res = ctx.model.Major.destroy({
+    const res = ctx.model.Semester.destroy({
       where: {
         id: {
           [Op.in]: ids
@@ -115,4 +104,4 @@ class MajorController extends Controller {
   }
 }
 
-module.exports = MajorController;
+module.exports = SemesterController;
