@@ -86,7 +86,7 @@ class MenuController extends Controller {
     } else {
       const [res, created] = await ctx.model.Menu.findOrCreate({
         where: {
-          name: params.name,
+          path: params.path,
         },
         defaults: params
       })
@@ -101,7 +101,7 @@ class MenuController extends Controller {
       } else {
         ctx.body = {
           total: 0,
-          message: "失败",
+          message: "新增失败，路由已存在",
           code: 250,
           isSucceed: false,
         }
