@@ -46,6 +46,9 @@ module.exports = app => {
   Class.associate = function () {
     app.model.Class.belongsTo(app.model.Major)
     app.model.Class.belongsTo(app.model.Schoolyear)
+    app.model.Class.hasMany(app.model.Student, {
+      foreignKey: 'class_id',
+    })
   }
 
   return Class

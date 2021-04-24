@@ -33,6 +33,9 @@ module.exports = app => {
     app.model.Major.hasMany(app.model.Class, {
       foreignKey: 'major_id',
     })
+    app.model.Major.hasMany(app.model.Student, {
+      foreignKey: 'major_id',
+    })
   }
 
   return Major

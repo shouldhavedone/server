@@ -29,6 +29,9 @@ module.exports = app => {
     app.model.Schoolyear.hasMany(app.model.Class, {
       foreignKey: 'schoolyear_id',
     })
+    app.model.Schoolyear.hasMany(app.model.Student, {
+      foreignKey: 'schoolyear_id',
+    })
   }
 
   return Schoolyear

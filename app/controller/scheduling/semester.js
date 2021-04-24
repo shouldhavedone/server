@@ -33,6 +33,17 @@ class SemesterController extends Controller {
     }
   }
 
+  async getAllSemester() {
+    const { ctx } = this;
+    const res = await ctx.model.Semester.findAndCountAll()
+    ctx.body = {
+      total: res.count,
+      data: res.rows,
+      code: 200,
+      isSucceed: true,
+    }
+  }
+
   async addOrUpdateSemester() {
     const { ctx } = this;
     const params = ctx.request.body;

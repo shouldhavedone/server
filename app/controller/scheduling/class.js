@@ -37,6 +37,17 @@ class ClassController extends Controller {
     }
   }
 
+  async getAllClass() {
+    const { ctx } = this;
+    const res = await ctx.model.Class.findAndCountAll()
+    ctx.body = {
+      total: res.count,
+      data: res.rows,
+      code: 200,
+      isSucceed: true,
+    }
+  }
+
   async addOrUpdateClass() {
     const { ctx } = this;
     const params = ctx.request.body;
