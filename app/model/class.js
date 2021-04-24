@@ -12,6 +12,15 @@ module.exports = app => {
       type: STRING(32),
       allowNull: false
     },
+    count: {
+      type: INTEGER(1),
+      allowNull: false,
+      defaultValue: 0,
+    },
+    grade: {
+      type: STRING(4),
+      allowNull: false,
+    },
     major_id: {
       type: INTEGER(8),
       references: {

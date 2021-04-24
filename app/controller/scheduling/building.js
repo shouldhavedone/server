@@ -9,6 +9,12 @@ class BuildingController extends Controller {
     const option = {
       limit: parseInt(params.rows),
       offset: (parseInt(params.page) - 1) * parseInt(params.rows),
+      include: [
+        { 
+          model: ctx.model.Classroom, 
+          attributes: ['id'],
+        }
+      ],
       where: {
         name: {
           [Op.like]: '%' + params.name + '%'

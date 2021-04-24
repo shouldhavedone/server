@@ -14,14 +14,12 @@ class LoginController extends Controller {
 
     if(res === null) {
       ctx.body = {
-        total: 0,
         message: '用户不存在',
         code: 200,
         isSucceed: false,
       }
     } else if(res.password === params.password) {
       ctx.body = {
-        total: 0,
         data: {
           access_token: "82f77e24-a604-454a-bc00-621afe8e754a",
           expires_in: 90067,
@@ -35,7 +33,6 @@ class LoginController extends Controller {
       }
     } else {
       ctx.body = {
-        total: 0,
         message: '密码错误',
         code: 200,
         isSucceed: false,

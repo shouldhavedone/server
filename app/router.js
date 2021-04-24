@@ -18,4 +18,5 @@ module.exports = app => {
   require('./router/scheduling/semester')(app);
   require('./router/scheduling/course')(app);
   require('./router/scheduling/courseType')(app);
+  require('./router/scheduling/teacher')(app);
 };

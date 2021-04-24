@@ -1,8 +1,8 @@
 'use strict';
 const Controller = require('egg').Controller;
 
-class CourseTypeController extends Controller {
-  async getCourseTypeList() {
+class TeacherController extends Controller {
+  async getTeacherList() {
     const { ctx, app } = this;
     const { Op } = app.Sequelize;
     const params = ctx.request.query
@@ -12,16 +12,19 @@ class CourseTypeController extends Controller {
       include: [
         { 
           model: ctx.model.Course, 
-          attributes: ['id'],
-        }
+          attributes: ['name'],
+        },
       ],
       where: {
         name: {
           [Op.like]: '%' + params.name + '%'
         },
+        course_id: {
+          [Op.like]: '%' + params.course_id + '%'
+        },
       }
     }
-    const res = await ctx.model.CourseType.findAndCountAll(option)
+    const res = await ctx.model.Teacher.findAndCountAll(option)
     ctx.body = {
       total: res.count,
       data: res.rows,
@@ -30,22 +33,11 @@ class CourseTypeController extends Controller {
     }
   }
 
-  async getAllCourseType() {
-    const { ctx } = this;
-    const res = await ctx.model.CourseType.findAndCountAll()
-    ctx.body = {
-      total: res.count,
-      data: res.rows,
-      code: 200,
-      isSucceed: true,
-    }
-  }
-
-  async addOrUpdateCourseType() {
+  async addOrUpdateTeacher() {
     const { ctx } = this;
     const params = ctx.request.body;
     if (params.id) {
-      const res = await ctx.model.CourseType.update(params, {
+      const res = await ctx.model.Teacher.update(params, {
         where: {
           id: params.id
         }
@@ -57,7 +49,7 @@ class CourseTypeController extends Controller {
         isSucceed: true,
       }
     } else {
-      const [res, created] = await ctx.model.CourseType.findOrCreate({
+      const [res, created] = await ctx.model.Teacher.findOrCreate({
         where: {
           name: params.name,
         },
@@ -82,12 +74,12 @@ class CourseTypeController extends Controller {
     }
   }
 
-  async delCourseType() {
+  async delTeacher() {
     const { ctx, app } = this;
     const { Op } = app.Sequelize;
     const params = ctx.request.body;
     const ids = params.ids.split(',').map(c => +c);
-    const res = ctx.model.CourseType.destroy({
+    const res = ctx.model.Teacher.destroy({
       where: {
         id: {
           [Op.in]: ids
@@ -112,4 +104,4 @@ class CourseTypeController extends Controller {
   }
 }
 
-module.exports = CourseTypeController;
+module.exports = TeacherController;

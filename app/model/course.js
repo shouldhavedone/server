@@ -20,6 +20,11 @@ module.exports = app => {
             type: INTEGER(2),
             allowNull: false,
         },
+        week: {
+            type: INTEGER(4),
+            allowNull: false,
+            defaultValue: 0,
+        },
         course_type_id: {
             type: INTEGER(8),
             references: {
@@ -38,6 +43,9 @@ module.exports = app => {
 
     Course.associate = function () {
         app.model.Course.belongsTo(app.model.CourseType)
+        app.model.Course.hasMany(app.model.Teacher, {
+            foreignKey: 'course_id',
+        })
     }
 
     return Course

@@ -33,6 +33,17 @@ class CourseController extends Controller {
     }
   }
 
+  async getAllCourse() {
+    const { ctx } = this;
+    const res = await ctx.model.Course.findAndCountAll()
+    ctx.body = {
+      total: res.count,
+      data: res.rows,
+      code: 200,
+      isSucceed: true,
+    }
+  }
+
   async addOrUpdateCourse() {
     const { ctx } = this;
     const params = ctx.request.body;

@@ -10,12 +10,13 @@ class MenuController extends Controller {
       limit: parseInt(params.rows),
       offset: (parseInt(params.page) - 1) * parseInt(params.rows),
       include: [
-        { 
-          model: ctx.model.Role, 
+        {
+          model: ctx.model.Role,
           attributes: ['name'],
+          sort: 'sort'
         },
-        { 
-          model: ctx.model.Menu, 
+        {
+          model: ctx.model.Menu,
         },
       ],
       where: {
@@ -23,7 +24,9 @@ class MenuController extends Controller {
           [Op.like]: '%' + params.name + '%'
         },
         parent: null,
-      }
+      },
+      // group: 'role_id',
+      sort: 'sort',
     }
     const res = await ctx.model.Menu.findAndCountAll(option)
     ctx.body = {
@@ -50,8 +53,8 @@ class MenuController extends Controller {
     const params = ctx.request.body;
     const option = {
       include: [
-        { 
-          model: ctx.model.Menu, 
+        {
+          model: ctx.model.Menu,
         },
       ],
       where: {
