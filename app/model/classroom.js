@@ -1,7 +1,7 @@
 'use strict'
 
 module.exports = app => {
-  const { INTEGER, STRING, DATE } = app.Sequelize
+  const { INTEGER, STRING, DATE, DOUBLE } = app.Sequelize
   const Classroom = app.model.define('Classroom', {
     id: {
       type: INTEGER(8),
@@ -13,9 +13,13 @@ module.exports = app => {
       allowNull: false
     },
     count: {
-      type: INTEGER(1),
+      type: INTEGER(4),
       allowNull: false,
       defaultValue: 0,
+    },
+    area: {
+      type: DOUBLE(16),
+      allowNull: false,
     },
     building_id: {
       type: INTEGER(8),

@@ -10,8 +10,8 @@ class UserController extends Controller {
       limit: parseInt(params.rows),
       offset: (parseInt(params.page) - 1) * parseInt(params.rows),
       include: [
-        { 
-          model: ctx.model.Role, 
+        {
+          model: ctx.model.Role,
           attributes: ['name'],
         },
       ],
@@ -44,11 +44,21 @@ class UserController extends Controller {
     }
   }
 
-  async addOrUpdateUser() {
+  async updateUser() {
     const { ctx } = this;
     const params = ctx.request.body;
-    if (params.id) {
-      const res = await ctx.model.User.update(params, {
+
+    console.log(params)
+
+    const user = await ctx.model.User.findOne({where: params.id})
+
+    if(user.password == params.password) {
+      const data = {
+        id: params.id,
+        username: params.username,
+        password: params.newpassword,
+      }
+      await ctx.model.User.update(data, {
         where: {
           id: params.id
         }
@@ -60,29 +70,14 @@ class UserController extends Controller {
         isSucceed: true,
       }
     } else {
-      const [res, created] = await ctx.model.User.findOrCreate({
-        where: {
-          username: params.username,
-        },
-        defaults: params
-      })
-
-      if (created) {
-        ctx.body = {
-          total: 0,
-          message: '新增成功',
-          code: 200,
-          isSucceed: true,
-        }
-      } else {
-        ctx.body = {
-          total: 0,
-          message: "失败",
-          code: 250,
-          isSucceed: false,
-        }
+      ctx.body = {
+        total: 0,
+        message: '密码错误',
+        code: 200,
+        isSucceed: false,
       }
     }
+    
   }
 
   async delUser() {

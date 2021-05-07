@@ -1,7 +1,7 @@
 'use strict'
 
 module.exports = app => {
-  const { INTEGER, STRING, DATE } = app.Sequelize
+  const { INTEGER, STRING, DATE, DOUBLE } = app.Sequelize
   const Building = app.model.define('Building', {
     id: {
       type: INTEGER(8),
@@ -15,6 +15,19 @@ module.exports = app => {
     createtime: {
       type: DATE,
       allowNull: false
+    },
+    area: {
+      type: DOUBLE(16),
+      allowNull: false
+    },
+    floor: {
+      type: INTEGER,
+      allowNull: false
+    },
+    count: {
+      type: INTEGER,
+      allowNull: false,
+      defaultValue: 0,
     },
   }, {
     freezeTableName: true,

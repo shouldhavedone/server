@@ -5,6 +5,6 @@ module.exports = app => {
 
   router.get('/back-sys/user-service/getUserList', controller.user.getUserList);
   router.get('/back-sys/user-service/getAllUser', controller.user.getAllUser);
-  router.post('/back-sys/user-service/addOrUpdateUser', controller.user.addOrUpdateUser);
+  router.post('/back-sys/user-service/updateUser', controller.user.updateUser);
   router.post('/back-sys/user-service/delUser', controller.user.delUser);
 };

@@ -28,10 +28,10 @@ class MenuController extends Controller {
       // group: 'role_id',
       sort: 'sort',
     }
-    const res = await ctx.model.Menu.findAndCountAll(option)
+    const res = await ctx.model.Menu.findAll(option)
     ctx.body = {
-      total: res.count,
-      data: res.rows,
+      total: res.length,
+      data: res,
       code: 200,
       isSucceed: true,
     }
