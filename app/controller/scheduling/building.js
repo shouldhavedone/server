@@ -7,8 +7,8 @@ class BuildingController extends Controller {
     const { Op } = app.Sequelize;
     const params = ctx.request.query
     const option = {
-      limit: parseInt(params.rows),
-      offset: (parseInt(params.page) - 1) * parseInt(params.rows),
+      limit: parseInt(params.rows),   //  限制条数
+      offset: (parseInt(params.page) - 1) * parseInt(params.rows),   
       include: [
         { 
           model: ctx.model.Classroom, 
@@ -26,7 +26,7 @@ class BuildingController extends Controller {
       total: res.count,
       data: res.rows,
       code: 200,
-      isSucceed: true,
+      isSucceed: true,  // 成功
     }
   }
 
@@ -87,7 +87,7 @@ class BuildingController extends Controller {
     const { Op } = app.Sequelize;
     const params = ctx.request.body;
     const ids = params.ids.split(',').map(c => +c);
-    const res = ctx.model.Building.destroy({
+    const res = await ctx.model.Building.destroy({
       where: {
         id: {
           [Op.in]: ids

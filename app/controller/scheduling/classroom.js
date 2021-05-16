@@ -79,7 +79,7 @@ class ClassroomController extends Controller {
     const { Op } = app.Sequelize;
     const params = ctx.request.body;
     const ids = params.ids.split(',').map(c => +c);
-    const res = ctx.model.Classroom.destroy({
+    const res = await ctx.model.Classroom.destroy({
       where: {
         id: {
           [Op.in]: ids
@@ -88,7 +88,7 @@ class ClassroomController extends Controller {
     })
     if (res) {
       ctx.body = {
-        total: 0,
+        total: 0, 
         message: "删除成功",
         code: 200,
         isSucceed: true,

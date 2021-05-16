@@ -35,7 +35,12 @@ class CourseController extends Controller {
 
   async getAllCourse() {
     const { ctx } = this;
-    const res = await ctx.model.Course.findAndCountAll()
+    const res = await ctx.model.Course.findAndCountAll({
+      include: [{
+        model: ctx.model.CourseType,
+        attributes: ['name']
+      }]
+    })
     ctx.body = {
       total: res.count,
       data: res.rows,
@@ -114,6 +119,7 @@ class CourseController extends Controller {
       }
     }
   }
+  
 }
 
 module.exports = CourseController;

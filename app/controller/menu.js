@@ -13,7 +13,9 @@ class MenuController extends Controller {
         {
           model: ctx.model.Role,
           attributes: ['name'],
-          sort: 'sort'
+          order: [
+            ['sort'],
+          ],
         },
         {
           model: ctx.model.Menu,
@@ -26,7 +28,9 @@ class MenuController extends Controller {
         parent: null,
       },
       // group: 'role_id',
-      sort: 'sort',
+      order: [
+        ['sort'],
+      ],
     }
     const res = await ctx.model.Menu.findAll(option)
     ctx.body = {
@@ -55,12 +59,18 @@ class MenuController extends Controller {
       include: [
         {
           model: ctx.model.Menu,
+          order: [
+            ['sort'],
+          ],
         },
       ],
       where: {
         role_id: params.role_id,
         parent: null,
-      }
+      },
+      order: [
+        ['sort'],
+      ],
     }
     const res = await ctx.model.Menu.findAndCountAll(option)
     ctx.body = {

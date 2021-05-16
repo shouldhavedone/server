@@ -46,6 +46,7 @@ module.exports = app => {
         app.model.Course.hasMany(app.model.Teacher, {
             foreignKey: 'course_id',
         })
+        app.model.Course.belongsToMany(app.model.Task, { through: 'TaskCourse' });
     }
 
     return Course
